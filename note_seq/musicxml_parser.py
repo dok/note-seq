@@ -687,6 +687,7 @@ class Note(object):
     self.is_in_chord = False
     self.is_grace_note = False
     self.pitch = None               # Tuple (Pitch Name, MIDI number)
+    self.lyric = None
     self.note_duration = NoteDuration(state)
     self.state = state
     self._parse()
@@ -717,6 +718,8 @@ class Note(object):
       elif child.tag == 'time-modification':
         # A time-modification element represents a tuplet_ratio
         self._parse_tuplet(child)
+      elif child.tag == 'lyric':
+        self.lyric = child.find('text').text
       elif child.tag == 'unpitched':
         raise UnpitchedNoteError('Unpitched notes are not supported')
       else:
